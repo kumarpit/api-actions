@@ -1,2 +1,6 @@
-import example from './middleware';
-export default example;
+import reaxMiddleware from './middleware';
+import { RSAA, RSAAObject } from './types';
+import { createAction } from './utils';
+
+export default reaxMiddleware;
+export { RSAA, RSAAObject, createAction };

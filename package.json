@@ -1,13 +1,12 @@
 {
   "name": "reax",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Redux middleware to simplify requests to RESTful APIs",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
-  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc",
+    "build": "tsc --skipLibCheck",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
     "lint": "tslint -p tsconfig.json",
     "prepare": "npm run build",
@@ -18,12 +17,19 @@
     "type": "git",
     "url": "git+https://github.com/kumarpit/reax.git"
   },
-  "files": ["lib/**/*"],
-  "keywords": ["redux", "axios"],
+  "files": [
+    "lib/**/*"
+  ],
+  "keywords": [
+    "redux",
+    "axios"
+  ],
   "author": "kumarpit",
   "license": "ISC",
   "devDependencies": {
+    "axios": "^0.27.2",
     "prettier": "^2.7.1",
+    "redux": "^4.2.0",
     "tslint": "^6.1.3",
     "tslint-config-prettier": "^1.18.0",
     "typescript": "^4.7.4"
