@@ -1,2 +1,2 @@
 # reax
-Redux middleware to simplify requests to restful APIs. Uses the Axios HTTP client.
+Redux middleware to simplify making requests to RESTful APIs. Uses the Axios HTTP client.
