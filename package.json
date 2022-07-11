@@ -1,6 +1,6 @@
 {
   "name": "reax",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "Redux middleware to simplify requests to RESTful APIs",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

@@ -1,15 +1,14 @@
 class InternalError extends Error {
   constructor(message: string) {
     super();
-    this.name = 'InternalError',
-    this.message = message;
+    (this.name = 'InternalError'), (this.message = message);
   }
 }
 
 class NetworkError extends Error {
   constructor(message: string) {
     super();
-    this.name = 'NetWorkError'
+    this.name = 'NetWorkError';
     this.message = message;
   }
 }
@@ -17,9 +16,9 @@ class NetworkError extends Error {
 class RequestError extends Error {
   constructor(message: string) {
     super();
-    this.name = 'RequestError'
-    this.message = message
+    this.name = 'RequestError';
+    this.message = message;
   }
 }
 
-export { InternalError, NetworkError, RequestError }
+export { InternalError, NetworkError, RequestError };
