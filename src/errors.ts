@@ -1,8 +1,25 @@
-class InvalidRSAA extends Error {
-  constructor() {
+class InternalError extends Error {
+  constructor(message: string) {
     super();
-    (this.name = 'InvalidRSAA'), (this.message = 'Invalid RSAA');
+    this.name = 'InternalError',
+    this.message = message;
   }
 }
 
-export { InvalidRSAA };
+class NetworkError extends Error {
+  constructor(message: string) {
+    super();
+    this.name = 'NetWorkError'
+    this.message = message;
+  }
+}
+
+class RequestError extends Error {
+  constructor(message: string) {
+    super();
+    this.name = 'RequestError'
+    this.message = message
+  }
+}
+
+export { InternalError, NetworkError, RequestError }

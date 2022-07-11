@@ -3,4 +3,4 @@ import { RSAA, RSAAObject } from './types';
 import { createAction } from './utils';
 
 export default reaxMiddleware;
-export { RSAA, RSAAObject, createAction };
+export { RSAAObject, createAction };
