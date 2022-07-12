@@ -2,7 +2,8 @@ import { AxiosInstance } from 'axios';
 import { RSAAObject } from './types';
 
 const network = async (axios: AxiosInstance, obj: RSAAObject) => {
-  const { path, method, body, config } = obj;
+    console.log(obj);
+    const { path, method, body, config } = obj;
 
   if (config) {
     switch (method) {

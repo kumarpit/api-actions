@@ -1,23 +1,27 @@
 class InternalError extends Error {
-  constructor(message: string) {
-    super();
-    (this.name = 'InternalError'), (this.message = message);
+  __error: any;
+  constructor(message: string, err: any) {
+    super(message);
+    this.name = 'InternalError';
+    this.__error = err;
   }
 }
 
 class NetworkError extends Error {
-  constructor(message: string) {
-    super();
+  __error: any;
+  constructor(message: string, err: any) {
+    super(message);
     this.name = 'NetWorkError';
-    this.message = message;
+    this.__error = err;
   }
 }
 
 class RequestError extends Error {
-  constructor(message: string) {
-    super();
+  __error: any;
+  constructor(message: string, err: any) {
+    super(message);
     this.name = 'RequestError';
-    this.message = message;
+    this.__error = err;
   }
 }
 

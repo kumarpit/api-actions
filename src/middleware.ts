@@ -26,14 +26,16 @@ const middleware = (axios: AxiosInstance): Middleware => {
 
     next(requestType);
 
+    console.log(callAPI);
+
     let body: PlainObject = {};
-    if (typeof callAPI.body == 'function') {
+    if (typeof callAPI.body === 'function') {
       try {
         body = { body: await callAPI.body(store.getState) };
       } catch (err) {
         return next({
           ...failureType,
-          payload: new InternalError('[RSAA].body function error'),
+          payload: new InternalError('`[RSAA].body` function error', err),
           error: true,
         });
       }
@@ -48,7 +50,7 @@ const middleware = (axios: AxiosInstance): Middleware => {
       } catch (err: any) {
         return next({
           ...failureType,
-          payload: new InternalError('`onFail` function error'),
+          payload: new InternalError('`onFail` function error', err),
           error: true,
         });
       }
@@ -56,13 +58,13 @@ const middleware = (axios: AxiosInstance): Middleware => {
       if (isNetworkError(err)) {
         return next({
           ...failureType,
-          payload: new NetworkError(err.message),
+          payload: new NetworkError(err.message, err),
           error: true,
         });
       } else {
         return next({
           ...failureType,
-          payload: new RequestError(err.message),
+          payload: new RequestError(err.message, err),
           error: true,
         });
       }
@@ -74,7 +76,7 @@ const middleware = (axios: AxiosInstance): Middleware => {
       } catch (err) {
         return next({
           ...failureType,
-          payload: new InternalError('`onSuccess` function error'),
+          payload: new InternalError('`onSuccess` function error', err),
           error: true,
         });
       }
@@ -86,7 +88,7 @@ const middleware = (axios: AxiosInstance): Middleware => {
     } else {
       return next({
         ...failureType,
-        payload: new InternalError('Got NULL from server'),
+        payload: new Error('Got NULL from server'),
         error: true,
       });
     }

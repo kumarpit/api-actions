@@ -2,6 +2,7 @@ import { AxiosError } from 'axios';
 import { defaultRSAA, PlainObject, RSAA, RSAAObject, RSAAInputObject } from './types';
 
 export const createAction = (obj: RSAAInputObject) => {
+  console.log('ACTION CREATED' + { ...defaultRSAA, ...obj });
   return { [RSAA]: { ...defaultRSAA, ...obj } };
 };
 
