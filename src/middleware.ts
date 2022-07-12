@@ -2,14 +2,10 @@ import { AnyAction, Middleware } from 'redux';
 import { PlainObject, RSAA, RSAAObject } from './types';
 import { AxiosInstance, AxiosResponse } from 'axios';
 import network from './network';
-import { getTypes, isNetworkError, isValidRSAA } from './utils';
+import { normalizeTypeDescriptors, isNetworkError, isValidRSAA, actionWith } from './utils';
 import { InternalError, NetworkError, RequestError } from './errors';
 
-// set interceptor with access to redux store
-// axios.request.use - success, fail
-// axios.response.use - success, fail
 const middleware = (axios: AxiosInstance): Middleware => {
-  // set axios interceptors here
   return (store: any) => (next: any) => async (action: AnyAction) => {
     if (!action[RSAA]) return next(action);
 
@@ -20,13 +16,11 @@ const middleware = (axios: AxiosInstance): Middleware => {
       return;
     }
 
-    const { types, onSuccess, onFail } = action[RSAA] as RSAAObject;
+    const { types, onReqSuccess, onReqFail } = action[RSAA] as RSAAObject;
     const callAPI: RSAAObject = action[RSAA];
-    const [requestType, successType, failureType] = getTypes(types);
+    const [requestType, successType, failureType] = normalizeTypeDescriptors(types);
 
     next(requestType);
-
-    console.log(callAPI);
 
     let body: PlainObject = {};
     if (typeof callAPI.body === 'function') {
@@ -46,11 +40,11 @@ const middleware = (axios: AxiosInstance): Middleware => {
       res = await network(axios, { ...callAPI, ...body });
     } catch (err: any) {
       try {
-        if (onFail) await onFail(store, err);
+        if (onReqFail) await onReqFail(store, err, axios);
       } catch (err: any) {
         return next({
           ...failureType,
-          payload: new InternalError('`onFail` function error', err),
+          payload: new InternalError('`onReqFail` function error', err),
           error: true,
         });
       }
@@ -72,19 +66,23 @@ const middleware = (axios: AxiosInstance): Middleware => {
 
     if (res) {
       try {
-        if (onSuccess) await onSuccess(store, res);
+        if (onReqSuccess) await onReqSuccess(store, res, axios);
       } catch (err) {
         return next({
           ...failureType,
-          payload: new InternalError('`onSuccess` function error', err),
+          payload: new InternalError('`onReqSuccess` function error', err),
           error: true,
         });
       }
 
-      return next({
-        ...successType,
-        payload: res.data,
-      });
+      let reqAction;
+      try {
+        reqAction = await actionWith(successType, store.getState, res);
+      } catch (err) {
+        next({ ...reqAction, ...failureType });
+      }
+
+      return next(reqAction);
     } else {
       return next({
         ...failureType,
