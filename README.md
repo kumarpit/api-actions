@@ -40,7 +40,7 @@
 </details>
 
 ## About
-This package aims to provide a simple interface to dispatch async actions based on API responses using axios. This solution is based on `redux-api-middleware` and the real world problem section from the redux documentation.
+This package aims to provide a simple interface to dispatch async actions based on API responses. It is based on `redux-api-middleware` and the real world problem section from the redux documentation.
 
 ## Introduction
 The `reax` middleware takes an `axios` instance upon initalization and intercepts a `RSAA` (Redux Standard API-Calling Action). These are actions identified by the presence of an `[RSAA]` key, where `RSAA` is a `String` constant defined by the `reax` middleware. To create a `RSAA` action compatible with the `reax` middleware, you must use the `createAction` method, which takes an object describing your API request as a parameter. Here is an example:
