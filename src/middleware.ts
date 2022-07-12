@@ -76,13 +76,10 @@ const middleware = (axios: AxiosInstance): Middleware => {
       }
 
       let reqAction;
-      try {
-        reqAction = await actionWith(successType, store.getState, res);
-      } catch (err) {
-        next({ ...reqAction, ...failureType });
-      }
+      reqAction = await actionWith(successType, store.getState, res);
 
-      return next(reqAction);
+      if (reqAction.error) return next({ ...reqAction, ...failureType });
+      else return next(reqAction);
     } else {
       return next({
         ...failureType,

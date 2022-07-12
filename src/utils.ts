@@ -16,7 +16,7 @@ export const createAction = (obj: RSAAInputObject) => {
 };
 
 export const normalizeTypeDescriptors = (types: TypeArray): [PlainObject, RequestDescriptor, PlainObject] => {
-  let [request, success, failure] = types;
+  const [request, success, failure] = types;
 
   let requestType: PlainObject, successType: RequestDescriptor, failureType: PlainObject;
 
@@ -38,7 +38,7 @@ export const actionWith = async (
   getState: any,
   res: AxiosResponse,
 ): Promise<FSAObject> => {
-  let ret: FSAObject = { type: descriptor.type, payload: '' };
+  const ret: FSAObject = { type: descriptor.type, payload: '' };
   try {
     if (typeof descriptor.payload === 'function') {
       ret.payload = await descriptor.payload(getState, res);
@@ -52,8 +52,8 @@ export const actionWith = async (
 };
 
 export const isValidRSAA = (obj: object): obj is RSAAObject => {
-  let o = obj as RSAAObject;
-  return !(o.method == undefined || o.path == undefined || o.types == undefined);
+  const o = obj as RSAAObject;
+  return !(o.method === undefined || o.path === undefined || o.types === undefined);
 };
 
 export const isNetworkError = (err: AxiosError) => {
