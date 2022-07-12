@@ -1,5 +1,5 @@
 import { AnyAction, Middleware } from 'redux';
-import { PlainObject, RSAA, RSAAObject } from './types';
+import { FSAObject, PlainObject, RSAA, RSAAObject } from './types';
 import { AxiosInstance, AxiosResponse } from 'axios';
 import network from './network';
 import { normalizeTypeDescriptors, isNetworkError, isValidRSAA, actionWith } from './utils';
@@ -75,8 +75,7 @@ const middleware = (axios: AxiosInstance): Middleware => {
         });
       }
 
-      let reqAction;
-      reqAction = await actionWith(successType, store.getState, res);
+      const reqAction: FSAObject = await actionWith(successType, store.getState, res);
 
       if (reqAction.error) return next({ ...reqAction, ...failureType });
       else return next(reqAction);
