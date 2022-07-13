@@ -1,4 +1,4 @@
-import { AnyAction, Middleware } from 'redux';
+import { AnyAction, Dispatch, Middleware, MiddlewareAPI } from 'redux';
 import { FSAObject, PlainObject, RSAA, RSAAObject } from './types';
 import { AxiosInstance, AxiosResponse } from 'axios';
 import network from './network';
@@ -6,7 +6,7 @@ import { normalizeTypeDescriptors, isNetworkError, isValidRSAA, actionWith } fro
 import { InternalError, NetworkError, RequestError } from './errors';
 
 const middleware = (axios: AxiosInstance): Middleware => {
-  return (store: any) => (next: any) => (action: AnyAction) => {
+  return (store: MiddlewareAPI) => (next: Dispatch) => (action: AnyAction) => {
     if (!action[RSAA]) return next(action);
 
     return (async () => {

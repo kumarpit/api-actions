@@ -2,7 +2,6 @@ import { AxiosError, AxiosResponse } from 'axios';
 import { InternalError } from './errors';
 import {
   defaultRSAA,
-  PlainObject,
   RSAA,
   RSAAObject,
   RSAAInputObject,
@@ -15,10 +14,10 @@ export const createAction = (obj: RSAAInputObject) => {
   return { [RSAA]: { ...defaultRSAA, ...obj } };
 };
 
-export const normalizeTypeDescriptors = (types: TypeArray): [PlainObject, RequestDescriptor, PlainObject] => {
+export const normalizeTypeDescriptors = (types: TypeArray): [FSAObject, RequestDescriptor, FSAObject] => {
   const [request, success, failure] = types;
 
-  let requestType: PlainObject, successType: RequestDescriptor, failureType: PlainObject;
+  let requestType: FSAObject, successType: RequestDescriptor, failureType: FSAObject;
 
   requestType = { type: request };
   failureType = { type: failure };

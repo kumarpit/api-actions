@@ -1,4 +1,5 @@
 import { AxiosError, AxiosRequestConfig, AxiosResponse, AxiosInstance } from 'axios';
+import { MiddlewareAPI, Store } from 'redux';
 
 export const RSAA = '@@reax/RSAA';
 
@@ -16,8 +17,8 @@ export interface RSAAObject {
   method: HTTPMethod;
   body?: PlainObject | ((getState: any) => PlainObject);
   types: TypeArray;
-  onReqSuccess?: ({ getState, dispatch }: any, res: AxiosResponse, axios: AxiosInstance) => void;
-  onReqFail?: ({ getState, dispatch }: any, err: AxiosError, axios: AxiosInstance) => void;
+  onReqSuccess?: ({ getState, dispatch }: MiddlewareAPI, res: AxiosResponse, axios: AxiosInstance) => void;
+  onReqFail?: ({ getState, dispatch }: MiddlewareAPI, err: AxiosError, axios: AxiosInstance) => void;
   config?: AxiosRequestConfig;
 }
 
@@ -26,8 +27,8 @@ export interface RSAAInputObject {
   method?: HTTPMethod;
   body?: PlainObject | ((getState: any) => PlainObject);
   types: TypeArray;
-  onReqSuccess?: ({ getState, dispatch }: any, res: AxiosResponse, axios: AxiosInstance) => void;
-  onReqFail?: ({ getState, dispatch }: any, err: AxiosError, axios: AxiosInstance) => void;
+  onReqSuccess?: ({ getState, dispatch }: MiddlewareAPI, res: AxiosResponse, axios: AxiosInstance) => void;
+  onReqFail?: ({ getState, dispatch }: MiddlewareAPI, err: AxiosError, axios: AxiosInstance) => void;
   config?: AxiosRequestConfig;
 }
 
@@ -40,7 +41,7 @@ export const defaultRSAA: Partial<RSAAObject> = {
 
 export interface FSAObject {
   type: string;
-  payload: PlainObject | string;
+  payload?: PlainObject | string;
   error?: boolean;
   meta?: PlainObject | string;
 }
