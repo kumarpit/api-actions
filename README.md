@@ -18,23 +18,15 @@
   <summary>Table of Contents</summary>
   <ol>
     <li>
-      <a href="#about-the-project">About</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
+      <a href="#about">About</a>
     </li>
     <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
+      <a href="#installation">Installation</a>
     </li>
     <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#error-handling">Error-Handling</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
@@ -61,7 +53,7 @@ export default configureStore({
 })
 ```
 
-## Introduction
+## Usage
 The `reax` middleware takes an `axios` instance upon initalization and intercepts a `RSAA` (Redux Standard API-Calling Action). These are actions identified by the presence of an `[RSAA]` key, where `RSAA` is a `String` constant defined by the `reax` middleware. To create a `RSAA` action compatible with the `reax` middleware, you must use the `createAction` method, which takes an object describing your API request as a parameter. Here is an example:
 ```javascript
 import { createAction } from 'reax';
