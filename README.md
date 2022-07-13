@@ -1,6 +1,6 @@
 <div id="top"></div>
 <div align="center">
-  <h3 align="center">Reax</h3>
+  <h1 align="center">Reax</h1>
 
   <p align="center">
     Redux middleware to simplify requests to RESTful APIs using the axios HTTP client
