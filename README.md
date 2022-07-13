@@ -69,7 +69,7 @@ The `createAction` parameter object is typed as the following:
 {
   path: string;
   method: HTTPMethod;
-  body?: PlainObject | ((getState: any) => PlainObject);
+  body?: PlainObject | ((getState: () => any) => PlainObject);
   types: TypeArray;
   onReqSuccess?: (getState: () => any, res: AxiosResponse, axios: AxiosInstance) => void;
   onReqFail?: (getState: () => any, err: AxiosError, axios: AxiosInstance) => void;
