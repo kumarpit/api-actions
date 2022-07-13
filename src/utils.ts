@@ -11,7 +11,7 @@ import {
 } from './types';
 
 export const createAction = (obj: RSAAInputObject) => {
-  return { [RSAA]: { ...defaultRSAA, ...obj } };
+  return { [RSAA]: { ...defaultRSAA, ...obj }, type: RSAA };
 };
 
 export const normalizeTypeDescriptors = (types: TypeArray): [FSAObject, RequestDescriptor, FSAObject] => {

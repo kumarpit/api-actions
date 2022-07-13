@@ -16,7 +16,8 @@ describe('utils', () => {
                 method: 'GET',
                 path: '/test',
                 types: ['REQ', 'SUCCESS', 'FAIL']
-            }       
+            },
+            type: RSAA       
         }
 
         expect(actual).to.deep.equalInAnyOrder(expected);
