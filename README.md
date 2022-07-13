@@ -82,16 +82,21 @@ If the second element is just a `string` ([TYPE] of action dispatched on success
   payload: res.data // res is the AxiosResponse recieved
 }
 ```
-However, there may be situations in which you may want to customize the payload of the above action - let's say you want the dispatch the complete response object (i.e not just `res.data`). This can be done by passing a `RequestDescriptor` instead of a `string`. A `RequestDescriptor` is an object of the following shape:
+However, there may be situations in which you may want to customize the payload of the above action - let's say you want to dispatch `res.statusCode` instead. This can be done by passing a `RequestDescriptor` instead of a `string`. A `RequestDescriptor` is an object of the following shape:
 ```javascript
 {
   type: string;
   payload: (getState: any, res: AxiosResponse) => PlainObject;
 }
 ```
-Hence, to dispatch the raw response object as the payload, you would use the following array to define `types`:
+Hence, to dispatch `res.statusCode` as the payload, you would use the following array to define `types`:
 ```javascript
-['REQUEST_TYPE', { type: 'SUCCESS_TYPE', payload: (_, res) => res }, 'FAIL_TYPE']
+['REQUEST_TYPE', 
+  { 
+    type: 'SUCCESS_TYPE', 
+    payload: (_, res) => res.statusCode 
+   }, 
+ 'FAIL_TYPE']
 ```
 This `types` definition would dispatch the following before the request is made: 
 ```javascript
@@ -101,7 +106,7 @@ On recieving a successful response, the dispatched action will be of the followi
 ```javascript
 { 
   type: 'SUCCESS_TYPE', 
-  payload: [COMPLETE RESPONSE OBJECT] 
+  payload: '2xx' // res.statusCode
 }
 ``` 
 Finally, the action dispatched on error will be the following (more details about error handling here):
