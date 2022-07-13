@@ -67,10 +67,10 @@ The `createAction` parameter object is typed as the following:
 ```
 Let's dissect this. 
 <br>
-`Path`: This field is self-explanatory - this is where you pass the URL for your request. Note: this field may also represent just an endpoint if you have set a `baseURL`  for the axios instance passed to `reax`. <br>
-`Method`: One of the HTTP methods.<br>
-`Body`: This may be a JSON object or a function that takes the current state of your redux store as an argument and returns a JSON object.<br>
-`Types`: The `TypeArray` is defined as the following:
+- `Path`: This field is self-explanatory - this is where you pass the URL for your request. Note: this field may also represent just an endpoint if you have set a `baseURL`  for the axios instance passed to `reax`. <br>
+- `Method`: One of the HTTP methods.<br>
+- `Body`: This may be a JSON object or a function that takes the current state of your redux store as an argument and returns a JSON object.<br>
+- `Types`: The `TypeArray` is defined as the following:
 ```javascript
 [string, string | RequestDescriptor, string]
 ```
@@ -117,13 +117,15 @@ Finally, the action dispatched on error will be the following (more details abou
   error: true 
 }
 ``` 
-`onReqSuccess`: This is a function that runs to completion upon recieving a successful response and _before_ dispatching the success action. It takes the current state of the redux store, the response object and the axios instance as arguments. One example usage of this function could be to set new default headers to the axios instance based on the response. This would be acheived by the following function:
+- `onReqSuccess`: This is a function that runs to completion upon recieving a successful response and _before_ dispatching the success action. It takes the current state of the redux store, the response object and the axios instance as arguments. One example usage of this function could be to set new default headers to the axios instance based on the response. This would be acheived by the following function:
 ```javascript
 ...
 onReqSuccess: (_, res, axios) => axios.defaults.headers.common['Authorization'] = `BEARER ${res.data.new_access_token}`
 ...
 ```
-`onReqFail`: Similar to the previous function, this runs to completion upon recieving an `AxiosError` (either an API error or network error) and _before_ dispatching the error action. <br>
-`config`: One benefit of passing a `axios` instance to `reax` is that this allows to set default `AxiosRequestConfig` options to ba applied to all your requests. However, some requests may need to override these defaults. To do this, you could pass in a custom config object.
+- `onReqFail`: Similar to the previous function, this runs to completion upon recieving an `AxiosError` (either an API error or network error) and _before_ dispatching the error action. <br>
+- `config`: One benefit of passing a `axios` instance to `reax` is that this allows to set default `AxiosRequestConfig` options to ba applied to all your requests. However, some requests may need to override these defaults. To do this, you could pass in a custom config object.
+
+## Installation
 
 
