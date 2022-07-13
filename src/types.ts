@@ -14,7 +14,7 @@ export type TypeArray = [string, string | RequestDescriptor, string];
 export interface RSAAObject {
   path: string;
   method: HTTPMethod;
-  body: PlainObject | ((getState: any) => PlainObject);
+  body?: PlainObject | ((getState: any) => PlainObject);
   types: TypeArray;
   onReqSuccess?: ({ getState, dispatch }: any, res: AxiosResponse, axios: AxiosInstance) => void;
   onReqFail?: ({ getState, dispatch }: any, err: AxiosError, axios: AxiosInstance) => void;
@@ -35,7 +35,7 @@ export type HTTPMethod = 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE';
 
 export const defaultRSAA: Partial<RSAAObject> = {
   method: 'GET',
-  body: {},
+  // body: {},
 };
 
 export interface FSAObject {
@@ -44,13 +44,3 @@ export interface FSAObject {
   error?: boolean;
   meta?: PlainObject | string;
 }
-
-/**
- * FSA object:
- * {
- *  type -- must have
- *  payload
- *  error -- if true, paylaod MUST be an error object
- *  meta
- * }
- */

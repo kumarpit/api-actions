@@ -1,4 +1,3 @@
-import axios from 'axios';
 import chai, { mockAxiosClient, store } from './config';
 import { createAction } from '../utils';
 import { InternalError, NetworkError, RequestError } from '../errors';
@@ -9,10 +8,6 @@ describe('middleware', () => {
   afterEach(() => {
     mockAxiosClient.reset();
     store.clearActions();
-  });
-
-  after(() => {
-    mockAxiosClient.restore();
   });
 
   it('should dispatch SUCCESS_ACTION_TYPE', async () => {
