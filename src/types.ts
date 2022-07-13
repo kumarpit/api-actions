@@ -1,5 +1,5 @@
 import { AxiosError, AxiosRequestConfig, AxiosResponse, AxiosInstance } from 'axios';
-import { MiddlewareAPI, Store } from 'redux';
+import { MiddlewareAPI } from 'redux';
 
 export const RSAA = '@@reax/RSAA';
 
@@ -7,7 +7,7 @@ export type Nullable<T> = T | null;
 export type PlainObject = { [name: string]: any };
 export type RequestDescriptor = {
   type: string;
-  payload: (getState: any, res: AxiosResponse) => PlainObject;
+  payload: (getState: () => any, res: AxiosResponse) => PlainObject;
 };
 
 export type TypeArray = [string, string | RequestDescriptor, string];
@@ -15,7 +15,7 @@ export type TypeArray = [string, string | RequestDescriptor, string];
 export interface RSAAObject {
   path: string;
   method: HTTPMethod;
-  body?: PlainObject | ((getState: any) => PlainObject);
+  body?: PlainObject | ((getState: () => any) => PlainObject);
   types: TypeArray;
   onReqSuccess?: ({ getState, dispatch }: MiddlewareAPI, res: AxiosResponse, axios: AxiosInstance) => void;
   onReqFail?: ({ getState, dispatch }: MiddlewareAPI, err: AxiosError, axios: AxiosInstance) => void;
@@ -25,7 +25,7 @@ export interface RSAAObject {
 export interface RSAAInputObject {
   path: string;
   method?: HTTPMethod;
-  body?: PlainObject | ((getState: any) => PlainObject);
+  body?: PlainObject | ((getState: () => any) => PlainObject);
   types: TypeArray;
   onReqSuccess?: ({ getState, dispatch }: MiddlewareAPI, res: AxiosResponse, axios: AxiosInstance) => void;
   onReqFail?: ({ getState, dispatch }: MiddlewareAPI, err: AxiosError, axios: AxiosInstance) => void;
