@@ -88,7 +88,7 @@ const middleware = (axios: AxiosInstance): Middleware => {
         });
       }
     })();
-  }
+  };
 };
 
 export default middleware;
