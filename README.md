@@ -42,6 +42,25 @@
 ## About
 This package aims to provide a simple interface to dispatch async actions based on API responses. It is based on the `redux-api-middleware` and the real world problem section from the redux documentation.
 
+## Installation
+```
+npm i -S reax
+```
+In the file where you initialize your redux store, import the reax middleware, pass it your axios instance, and include it as middleware.
+```javascript
+import reaxMiddleware from 'reax';
+import {configureStore} from '@reduxjs/toolkit';
+import {combineReducers} from 'redux';
+import axios from 'axios'
+
+const axiosInstance = axios.create({...});
+
+export default configureStore({
+  reducer: combineReducers({...}),
+  middleware: (gdm) => gdm().concat(reaxMiddleware(axiosInstance)),
+})
+```
+
 ## Introduction
 The `reax` middleware takes an `axios` instance upon initalization and intercepts a `RSAA` (Redux Standard API-Calling Action). These are actions identified by the presence of an `[RSAA]` key, where `RSAA` is a `String` constant defined by the `reax` middleware. To create a `RSAA` action compatible with the `reax` middleware, you must use the `createAction` method, which takes an object describing your API request as a parameter. Here is an example:
 ```javascript
@@ -125,7 +144,3 @@ onReqSuccess: (_, res, axios) => axios.defaults.headers.common['Authorization'] 
 ```
 - `onReqFail`: Similar to the previous function, this runs to completion upon recieving an `AxiosError` (either an API error or network error) and _before_ dispatching the error action. <br>
 - `config`: One benefit of passing a `axios` instance to `reax` is that this allows to set default `AxiosRequestConfig` options to ba applied to all your requests. However, some requests may need to override these defaults. To do this, you could pass in a custom config object.
-
-## Installation
-
-
