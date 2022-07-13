@@ -71,8 +71,8 @@ The `createAction` parameter object is typed as the following:
   method: HTTPMethod;
   body?: PlainObject | ((getState: any) => PlainObject);
   types: TypeArray;
-  onReqSuccess?: (getState: any, res: AxiosResponse, axios: AxiosInstance) => void;
-  onReqFail?: (getState: any, err: AxiosError, axios: AxiosInstance) => void;
+  onReqSuccess?: (getState: () => any, res: AxiosResponse, axios: AxiosInstance) => void;
+  onReqFail?: (getState: () => any, err: AxiosError, axios: AxiosInstance) => void;
   config?: AxiosRequestConfig;
 }
 ```
@@ -97,7 +97,7 @@ However, there may be situations in which you may want to customize the payload 
 ```javascript
 {
   type: string;
-  payload: (getState: any, res: AxiosResponse) => PlainObject;
+  payload: (getState: () => any, res: AxiosResponse) => PlainObject;
 }
 ```
 Hence, to dispatch `res.statusCode` as the payload, you would use the following array to define `types`:
