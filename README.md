@@ -3,7 +3,7 @@
   <h1 align="center">Reax</h1>
 
   <p align="center">
-    Redux middleware to simplify requests to RESTful APIs using the axios HTTP client
+    Redux middleware to simplify async actions when communicating with an api, uses the axios HTTP client
     <br />
     <a href="https://github.com/kumarpit/reax/issues/new">Report Bug</a>
     ·
