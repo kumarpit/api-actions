@@ -1,6 +1,6 @@
-import reaxMiddleware from './middleware';
+import APIActions from './middleware';
 import { RSAAObject } from './types';
-import { createAction } from './utils';
+import { createAPIAction } from './utils';
 
-export default reaxMiddleware;
-export { RSAAObject, createAction };
+export default APIActions;
+export { RSAAObject, createAPIAction };

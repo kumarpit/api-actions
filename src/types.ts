@@ -1,7 +1,7 @@
 import { AxiosError, AxiosRequestConfig, AxiosResponse, AxiosInstance } from 'axios';
 import { MiddlewareAPI } from 'redux';
 
-export const RSAA = '@@reax/RSAA';
+export const RSAA = '@@api-actions/RSAA';
 
 export type Nullable<T> = T | null;
 export type PlainObject = { [name: string]: any };

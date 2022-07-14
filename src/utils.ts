@@ -1,16 +1,8 @@
 import { AxiosError, AxiosResponse } from 'axios';
 import { InternalError } from './errors';
-import {
-  defaultRSAA,
-  RSAA,
-  RSAAObject,
-  RSAAInputObject,
-  TypeArray,
-  RequestDescriptor,
-  FSAObject,
-} from './types';
+import { defaultRSAA, RSAA, RSAAObject, RSAAInputObject, TypeArray, RequestDescriptor, FSAObject } from './types';
 
-export const createAction = (obj: RSAAInputObject) => {
+export const createAPIAction = (obj: RSAAInputObject) => {
   return { [RSAA]: { ...defaultRSAA, ...obj }, type: RSAA };
 };
 

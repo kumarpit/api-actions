@@ -1,5 +1,5 @@
 import chai, { mockAxiosClient, store } from './config';
-import { createAction } from '../utils';
+import { createAPIAction } from '../utils';
 import { InternalError, NetworkError, RequestError } from '../errors';
 
 const expect = chai.expect;
@@ -24,7 +24,7 @@ describe('middleware', () => {
     ];
 
     await store.dispatch({
-      ...createAction({
+      ...createAPIAction({
         path: '/test',
         types: ['REQUEST_ACTION_TYPE', 'SUCCESS_ACTION_TYPE', 'FAIL_ACTION_TYPE'],
       }),
@@ -48,7 +48,7 @@ describe('middleware', () => {
     ];
 
     await store.dispatch({
-      ...createAction({
+      ...createAPIAction({
         path: '/test',
         types: ['REQUEST_ACTION_TYPE', { type: 'SUCCESS_ACTION_TYPE', payload: (_, res) => res }, 'FAIL_ACTION_TYPE'],
       }),
@@ -59,12 +59,12 @@ describe('middleware', () => {
   });
 
   it('should send body defined by [RSAA].body function', async () => {
-    mockAxiosClient.onPost('/test').reply(config => {
-      const data = JSON.parse(config.data)
+    mockAxiosClient.onPost('/test').reply((config) => {
+      const data = JSON.parse(config.data);
       if (data.key === '@@expected') {
-        return [200, 'success']
+        return [200, 'success'];
       } else {
-        return [400]
+        return [400];
       }
     });
 
@@ -79,10 +79,12 @@ describe('middleware', () => {
     ];
 
     await store.dispatch({
-      ...createAction({
+      ...createAPIAction({
         path: '/test',
         method: 'POST',
-        body: (_) => { return { 'key': '@@expected' } },
+        body: (_) => {
+          return { key: '@@expected' };
+        },
         types: ['REQUEST_ACTION_TYPE', { type: 'SUCCESS_ACTION_TYPE', payload: (_, res) => res }, 'FAIL_ACTION_TYPE'],
       }),
       type: 'TESTING',
@@ -106,7 +108,7 @@ describe('middleware', () => {
     ];
 
     await store.dispatch({
-      ...createAction({
+      ...createAPIAction({
         path: '/test',
         types: ['REQUEST_ACTION_TYPE', 'SUCCESS_ACTION_TYPE', 'FAIL_ACTION_TYPE'],
       }),
@@ -131,7 +133,7 @@ describe('middleware', () => {
     ];
 
     await store.dispatch({
-      ...createAction({
+      ...createAPIAction({
         path: '/test',
         types: ['REQUEST_ACTION_TYPE', 'SUCCESS_ACTION_TYPE', 'FAIL_ACTION_TYPE'],
       }),
@@ -156,7 +158,7 @@ describe('middleware', () => {
     ];
 
     await store.dispatch({
-      ...createAction({
+      ...createAPIAction({
         path: '/test',
         types: [
           'REQUEST_ACTION_TYPE',
@@ -185,7 +187,7 @@ describe('middleware', () => {
     ];
 
     await store.dispatch({
-      ...createAction({
+      ...createAPIAction({
         path: '/test',
         types: ['REQUEST_ACTION_TYPE', 'SUCCESS_ACTION_TYPE', 'FAIL_ACTION_TYPE'],
         onReqSuccess: ({ getState, dispatch }, res, axios) => getState().auth.token,
@@ -211,7 +213,7 @@ describe('middleware', () => {
     ];
 
     await store.dispatch({
-      ...createAction({
+      ...createAPIAction({
         path: '/test',
         types: ['REQUEST_ACTION_TYPE', 'SUCCESS_ACTION_TYPE', 'FAIL_ACTION_TYPE'],
         onReqFail: ({ getState, dispatch }, err, axios) => getState().auth.token,
@@ -223,12 +225,12 @@ describe('middleware', () => {
   });
 
   it('should dispatch FAIL_ACTION_TYPE on InternalError - failing [RSAA].body function', async () => {
-    mockAxiosClient.onPost('/test').reply(config => {
-      const data = JSON.parse(config.data)
+    mockAxiosClient.onPost('/test').reply((config) => {
+      const data = JSON.parse(config.data);
       if (data.key === '@@expected') {
-        return [200, 'success']
+        return [200, 'success'];
       } else {
-        return [400]
+        return [400];
       }
     });
 
@@ -239,15 +241,17 @@ describe('middleware', () => {
       {
         type: 'FAIL_ACTION_TYPE',
         payload: new InternalError('`[RSAA].body` function error', {}),
-        error: true
+        error: true,
       },
     ];
 
     await store.dispatch({
-      ...createAction({
+      ...createAPIAction({
         path: '/test',
         method: 'POST',
-        body: (getState) => { return { 'key': getState().auth.key } },
+        body: (getState) => {
+          return { key: getState().auth.key };
+        },
         types: ['REQUEST_ACTION_TYPE', { type: 'SUCCESS_ACTION_TYPE', payload: (_, res) => res }, 'FAIL_ACTION_TYPE'],
       }),
       type: 'TESTING',

@@ -12,7 +12,7 @@ const middleware = (axios: AxiosInstance): Middleware => {
     return (async () => {
       if (!isValidRSAA(action[RSAA])) {
         console.error(
-          'Reax middleware encountered a malformed RSAA object. Please use the `createAction` method to provide RSAA objects.',
+          'api-actions middleware encountered a malformed RSAA action. Please use the `createApiAction` method to provide RSAA-compliant actions.',
         );
         return;
       }
