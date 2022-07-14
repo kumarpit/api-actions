@@ -1,6 +1,6 @@
 <div id="top"></div>
 <div align="center">
-  <h1 align="center">API-Actions</h1>
+  <h1 align="center">api-actions</h1>
 
   <p align="center">
     Redux middleware to simplify async actions when communicating with an API, uses the axios HTTP client
