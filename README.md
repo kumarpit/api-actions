@@ -1,9 +1,9 @@
 <div id="top"></div>
 <div align="center">
-  <h1 align="center">Reax</h1>
+  <h1 align="center">api-actions</h1>
 
   <p align="center">
-    Redux middleware to simplify requests to RESTful APIs using the axios HTTP client
+    Redux middleware to simplify async actions when communicating with an API, uses the axios HTTP client
     <br />
     <a href="https://github.com/kumarpit/reax/issues/new">Report Bug</a>
     ·
@@ -69,10 +69,10 @@ The `createAction` parameter object is typed as the following:
 {
   path: string;
   method: HTTPMethod;
-  body?: PlainObject | ((getState: any) => PlainObject);
+  body?: PlainObject | ((getState: () => any) => PlainObject);
   types: TypeArray;
-  onReqSuccess?: (getState: any, res: AxiosResponse, axios: AxiosInstance) => void;
-  onReqFail?: (getState: any, err: AxiosError, axios: AxiosInstance) => void;
+  onReqSuccess?: (getState: () => any, res: AxiosResponse, axios: AxiosInstance) => void;
+  onReqFail?: (getState: () => any, err: AxiosError, axios: AxiosInstance) => void;
   config?: AxiosRequestConfig;
 }
 ```
@@ -97,7 +97,7 @@ However, there may be situations in which you may want to customize the payload 
 ```javascript
 {
   type: string;
-  payload: (getState: any, res: AxiosResponse) => PlainObject;
+  payload: (getState: () => any, res: AxiosResponse) => PlainObject;
 }
 ```
 Hence, to dispatch `res.statusCode` as the payload, you would use the following array to define `types`:
