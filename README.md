@@ -24,7 +24,8 @@
       <a href="#installation">Installation</a>
     </li>
     <li><a href="#usage">Usage</a></li>
-    <li><a href="#error-handling">Error-Handling</a></li>
+    <li><a href="#error-handling">Error Handling</a></li>
+    <li><a href="#testing">Testing</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
@@ -136,3 +137,40 @@ onReqSuccess: (_, res, axios) => axios.defaults.headers.common['Authorization'] 
 ```
 - `onReqFail`: Similar to the previous function, this runs to completion upon recieving an `AxiosError` (either an API error or network error) and _before_ dispatching the error action. <br>
 - `config`: One benefit of passing a `axios` instance to `api-actions` is that this allows to set default `AxiosRequestConfig` options to ba applied to all your requests. However, some requests may need to override these defaults. To do this, you could pass in a custom config object.
+
+## Error Handling
+In accordance with FSA, in the case of an error, an action of the following form is returned:
+```javascript
+{ 
+  type: [FAIL_TYPE],
+  payload: [ERROR OBJECT],
+  error: true
+}
+```
+There are three types of error classes that `api-actions` may return - `InternalError`, `NetworkError`, `RequestError`. `InternalError` is thrown when a user-defined function fails (such as the function passed in the request descriptor), `NetworkError` is thrown when the API is unreachable, and `RequestError` is thrown when the API returns a response with `statusCode` in the `4xx/5xx` range. Each of these error classes extend the `CustomError` class, which defined as the following:
+```javascript
+class CustomError extends Error {
+  __error: any;
+  constructor(name: string, message: string, err: any) {
+    super(message);
+    this.name = name;
+    this.__error = err;
+  }
+}
+```
+The `__error` property wraps the original error thrown. For example, when an API returns a response with statusCode 400 (i.e Bad Request), the following action is dispatched:
+```javascript
+{
+  type: [FAIL_TYPE],
+  payload: {
+    name: 'RequestError',
+    message: 'Request failed with error code 400',
+    __error: [AxiosError object]
+  },
+  error: true
+}
+```
+
+## Testing
+This package is unit tested using the `mocha` and `chai` libraries. [TODO DETAILS]
+
