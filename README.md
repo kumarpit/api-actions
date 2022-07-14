@@ -5,9 +5,9 @@
   <p align="center">
     Redux middleware to simplify async actions when communicating with an API, uses the axios HTTP client
     <br />
-    <a href="https://github.com/kumarpit/reax/issues/new">Report Bug</a>
+    <a href="https://github.com/kumarpit/api-actions/issues/new">Report Bug</a>
     ·
-    <a href="https://github.com/kumarpit/reax/issues/new">Request Feature</a>
+    <a href="https://github.com/kumarpit/api-actions/issues/new">Request Feature</a>
   </p>
 </div>
 
@@ -32,15 +32,15 @@
 </details>
 
 ## About
-This package aims to provide a simple interface to dispatch async actions based on API responses. It is based on the `redux-api-middleware` and the real world problem section from the redux documentation.
+This package provides a simple interface to dispatch async actions based on API responses. It is based on the `redux-api-middleware` and the real world problem section from the `redux` documentation.
 
 ## Installation
 ```
-npm i -S reax
+npm i -S api-actions
 ```
-In the file where you initialize your redux store, import the reax middleware, pass it your axios instance, and include it as middleware.
+In the file where you initialize your redux store, import the `api-actions` middleware, pass it your axios instance, and include it as middleware.
 ```javascript
-import reaxMiddleware from 'reax';
+import APIActions from 'api-actions';
 import {configureStore} from '@reduxjs/toolkit';
 import {combineReducers} from 'redux';
 import axios from 'axios'
@@ -49,22 +49,22 @@ const axiosInstance = axios.create({...});
 
 export default configureStore({
   reducer: combineReducers({...}),
-  middleware: (gdm) => gdm().concat(reaxMiddleware(axiosInstance)),
+  middleware: (gdm) => gdm().concat(APIActions(axiosInstance)),
 })
 ```
 
 ## Usage
-The `reax` middleware takes an `axios` instance upon initalization and intercepts a `RSAA` (Redux Standard API-Calling Action). These are actions identified by the presence of an `[RSAA]` key, where `RSAA` is a `String` constant defined by the `reax` middleware. To create a `RSAA` action compatible with the `reax` middleware, you must use the `createAction` method, which takes an object describing your API request as a parameter. Here is an example:
+The `api-actions` middleware takes an `axios` instance upon initalization and intercepts a `RSAA` (Redux Standard API-Calling Action). These are actions identified by the presence of an `[RSAA]` key, where `RSAA` is a `String` constant defined by the `api-actions` middleware. To create a `RSAA` action compatible with the `api-actions` middleware, you must use the `createAPIAction` method, which takes an object describing your API request as a parameter. Here is an example:
 ```javascript
-import { createAction } from 'reax';
+import { createAPIAction } from 'api-actions';
 ...
-dispatch(createAction({
+dispatch(createAPIAction({
   path: 'http://example.com/create_action',
   method: 'GET',
   types: ['REQUEST', 'SUCCESS', 'FAIL']
 })
 ```
-The `createAction` parameter object is typed as the following:
+The `createAPIAction` parameter object is typed as the following:
 ```javascript
 {
   path: string;
@@ -78,7 +78,7 @@ The `createAction` parameter object is typed as the following:
 ```
 Let's dissect this. 
 <br>
-- `Path`: This field is self-explanatory - this is where you pass the URL for your request. Note: this field may also represent just an endpoint if you have set a `baseURL`  for the axios instance passed to `reax`. <br>
+- `Path`: This field is self-explanatory - this is where you pass the URL for your request. Note: this field may also represent just an endpoint if you have set a `baseURL`  for the axios instance passed to `api-actions`. <br>
 - `Method`: One of the HTTP methods.<br>
 - `Body`: This may be a JSON object or a function that takes the current state of your redux store as an argument and returns a JSON object.<br>
 - `Types`: The `TypeArray` is defined as the following:
@@ -135,4 +135,4 @@ onReqSuccess: (_, res, axios) => axios.defaults.headers.common['Authorization'] 
 ...
 ```
 - `onReqFail`: Similar to the previous function, this runs to completion upon recieving an `AxiosError` (either an API error or network error) and _before_ dispatching the error action. <br>
-- `config`: One benefit of passing a `axios` instance to `reax` is that this allows to set default `AxiosRequestConfig` options to ba applied to all your requests. However, some requests may need to override these defaults. To do this, you could pass in a custom config object.
+- `config`: One benefit of passing a `axios` instance to `api-actions` is that this allows to set default `AxiosRequestConfig` options to ba applied to all your requests. However, some requests may need to override these defaults. To do this, you could pass in a custom config object.
