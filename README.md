@@ -32,7 +32,7 @@
 </details>
 
 ## About
-This package provides a simple interface to dispatch async actions based on API responses. It is based on the `redux-api-middleware` and the real world problem section from the `redux` documentation.
+This package provides a simple interface to dispatch async FSA-compliant actions based on API responses. It is based on the `redux-api-middleware` and the real world problem section from the `redux` documentation.
 
 ## Installation
 ```
