@@ -26,14 +26,13 @@
     <li><a href="#usage">Usage</a></li>
     <li><a href="#error-handling">Error Handling</a></li>
     <li><a href="#testing">Testing</a></li>
-    <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
+    <li><a href="#acknowledgements">Acknowledgements</a></li>
   </ol>
 </details>
 
 ## About
-This package provides a simple interface to dispatch async FSA-compliant actions based on API responses. It is based on the `redux-api-middleware` and the real world problem section from the `redux` documentation.
+This package provides a simple interface to dispatch async [FSA-compliant](https://github.com/redux-utilities/flux-standard-action) actions based on API responses.
 
 ## Installation
 ```
@@ -139,7 +138,7 @@ onReqSuccess: (_, res, axios) => axios.defaults.headers.common['Authorization'] 
 - `config`: One benefit of passing a `axios` instance to `api-actions` is that this allows to set default `AxiosRequestConfig` options to ba applied to all your requests. However, some requests may need to override these defaults. To do this, you could pass in a custom config object.
 
 ## Error Handling
-In accordance with FSA, in the case of an error, an action of the following form is returned:
+In accordance with [FSA](https://github.com/redux-utilities/flux-standard-action), in the case of an error, an action of the following form is returned:
 ```javascript
 { 
   type: [FAIL_TYPE],
@@ -172,5 +171,41 @@ The `__error` property wraps the original error thrown. For example, when an API
 ```
 
 ## Testing
-This package is unit tested using the `mocha` and `chai` libraries. [TODO DETAILS]
+This package is unit tested using the `mocha` and `chai` libraries. Utilizing `axios-mock-adapter` and `redux-mock-store`, most test code follows this format:
+```javascript
+// This snippet tests whether a FAIL_ACTION_TYPE is dispatched on receiving a 404 error from the API
+it('should dispatch FAIL_ACTION_TYPE on RequestError', async () => {
+    // define mock endpoint
+    mockAxiosClient.onGet('/test').reply(404);
+  
+    // array of expected actions to be dispatched by api-actions
+    const expectActions = [
+      {
+        type: 'REQUEST_ACTION_TYPE',
+      },
+      {
+        type: 'FAIL_ACTION_TYPE',
+        payload: new RequestError('RequestError: Request failed with status code 404', {}),
+        error: true,
+      },
+    ];
+    
+    // dispatch APIAction to mock store
+    await store.dispatch({
+      ...createAPIAction({
+        path: '/test',
+        types: ['REQUEST_ACTION_TYPE', 'SUCCESS_ACTION_TYPE', 'FAIL_ACTION_TYPE'],
+      }),
+      type: 'TESTING',
+    });
 
+    expect(store.getActions()).shallowDeepEqual(expectActions);
+ });
+```
+## License
+MIT
+
+## Acknowledgements
+This package was inspired by the following sources:
+- [real-world](https://github.com/reduxjs/redux/blob/master/examples/real-world/src/middleware/api.js) example from Redux <br>
+- [redux-api-middleware](https://github.com/agraboso/redux-api-middleware)
