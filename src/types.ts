@@ -5,12 +5,12 @@ export const RSAA = '@@api-actions/RSAA';
 
 export type Nullable<T> = T | null;
 export type PlainObject = { [name: string]: any };
-export type RequestDescriptor = {
+export type ResponseDescriptor = {
   type: string;
   payload: (getState: () => any, res: AxiosResponse) => PlainObject;
 };
 
-export type TypeArray = [string, string | RequestDescriptor, string];
+export type TypeArray = [string, string | ResponseDescriptor, string];
 
 export interface RSAAObject {
   path: string;
@@ -36,7 +36,6 @@ export type HTTPMethod = 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE';
 
 export const defaultRSAA: Partial<RSAAObject> = {
   method: 'GET',
-  // body: {},
 };
 
 export interface FSAObject {

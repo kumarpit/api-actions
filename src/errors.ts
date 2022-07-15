@@ -1,27 +1,52 @@
-class InternalError extends Error {
+/* tslint:disable:max-classes-per-file */
+/* tslint:disable:variable-name */
+
+/**
+ * Error class that defines shape of all errors
+ * thrown on an exception
+ *
+ * @class CustomError
+ * @param name name of the error - string
+ * @param message error message - string
+ * @param err error object - any
+ */
+class CustomError extends Error {
   __error: any;
-  constructor(message: string, err: any) {
+  constructor(name: string, message: string, err: any) {
     super(message);
-    this.name = 'InternalError';
+    this.name = name;
     this.__error = err;
   }
 }
 
-class NetworkError extends Error {
-  __error: any;
+/**
+ * Thrown when an user-defined function throws an error
+ * for eg. An InternalError will be thrown when [RSAA].body function
+ * fails
+ */
+class InternalError extends CustomError {
   constructor(message: string, err: any) {
-    super(message);
-    this.name = 'NetWorkError';
-    this.__error = err;
+    super('InternalError', message, err);
   }
 }
 
-class RequestError extends Error {
-  __error: any;
+/**
+ * Thrown when the API is unreachable or no response
+ * is recieved
+ */
+class NetworkError extends CustomError {
   constructor(message: string, err: any) {
-    super(message);
-    this.name = 'RequestError';
-    this.__error = err;
+    super('NetworkError', message, err);
+  }
+}
+
+/**
+ * Thrown when a response with status code 4xx/5xx
+ * is received
+ */
+class RequestError extends CustomError {
+  constructor(message: string, err: any) {
+    super('RequestError', message, err);
   }
 }
 

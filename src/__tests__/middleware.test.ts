@@ -58,6 +58,39 @@ describe('middleware', () => {
     expect(store.getActions()).shallowDeepEqual(expectActions);
   });
 
+  it('should send body defined by [RSAA].body object', async () => {
+    mockAxiosClient.onPost('/test').reply((config) => {
+      const data = JSON.parse(config.data);
+      if (data.key === '@@expected') {
+        return [200, 'success'];
+      } else {
+        return [400];
+      }
+    });
+
+    const expectActions = [
+      {
+        type: 'REQUEST_ACTION_TYPE',
+      },
+      {
+        type: 'SUCCESS_ACTION_TYPE',
+        payload: { data: 'success' },
+      },
+    ];
+
+    await store.dispatch({
+      ...createAPIAction({
+        path: '/test',
+        method: 'POST',
+        body: { key: '@@expected' },
+        types: ['REQUEST_ACTION_TYPE', { type: 'SUCCESS_ACTION_TYPE', payload: (_, res) => res }, 'FAIL_ACTION_TYPE'],
+      }),
+      type: 'TESTING',
+    });
+
+    expect(store.getActions()).shallowDeepEqual(expectActions);
+  });
+
   it('should send body defined by [RSAA].body function', async () => {
     mockAxiosClient.onPost('/test').reply((config) => {
       const data = JSON.parse(config.data);

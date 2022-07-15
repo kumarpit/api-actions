@@ -1,6 +1,14 @@
 import { AxiosInstance } from 'axios';
 import { RSAAObject } from './types';
 
+/**
+ * This function is responsible for making the
+ * API requests
+ *
+ * @param axios AxiosInstance used to make API calls
+ * @param obj RSAAObject describing the API call to be made
+ * @returns Promise<AxiosResponse>
+ */
 const network = async (axios: AxiosInstance, obj: RSAAObject) => {
   const { path, method, body, config } = obj;
 
