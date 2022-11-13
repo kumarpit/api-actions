@@ -36,7 +36,7 @@ This package provides a simple interface to dispatch async [FSA-compliant](https
 
 ## Installation
 ```
-npm i -S api-actions
+npm i api-actions
 ```
 In the file where you initialize your redux store, import the `api-actions` middleware, pass it your axios instance, and include it as middleware.
 ```javascript
